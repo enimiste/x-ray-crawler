@@ -9,7 +9,7 @@ module.exports = function() {
 			base_url : 'https://www.jumia.ma/telephone/',
 			root_scope : '',
 			pagination : '.item.-selected + .item a@href',
-			limit : 1,
+			limit : undefined,
 			//@param xray instance
 			options : function(xray) {
 				return { 
