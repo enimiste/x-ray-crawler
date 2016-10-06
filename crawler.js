@@ -20,8 +20,8 @@ function crawler (config, callback) {
 	}
 
 	let has_root_scope = (conf.base_url !== undefined && typeof(conf.base_url) === 'string');
-	let has_pagination = (conf.base_url !== undefined && typeof(conf.base_url) === 'string');
-	let has_limit = (conf.base_url !== undefined && typeof(conf.base_url) === 'number');
+	let has_pagination = (conf.pagination !== undefined && typeof(conf.pagination) === 'string');
+	let has_limit = (conf.limit !== undefined && typeof(conf.limit) === 'number');
 	
 	if(conf.filters !== undefined){
 		var x = xray({ filters: config.filters });
