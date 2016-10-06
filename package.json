@@ -12,6 +12,7 @@
   "author": "NOUNI EL BACHIR <nouni.elbachir@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "string": "^3.3.1",
     "underscore": "^1.8.3",
     "x-ray": "^2.3.0"
   }
