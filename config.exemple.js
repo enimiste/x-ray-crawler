@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var S = require('string');
+var fs = require('fs');
 
 //ETL config
 module.exports = function() {
