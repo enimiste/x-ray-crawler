@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var fs = require('fs');
+var S = require('string');
 
 module.exports = function() {
 	var i = 1;
@@ -38,6 +39,9 @@ module.exports = function() {
 				item.produits = _.map(item.produits, function(p){
 					p.id = i++;
 					return p;
+				});
+				item.categories = _.reject(item.categories, function(c){
+					return S(c.title).contains('Accueil');
 				});
 				return item;
 			});

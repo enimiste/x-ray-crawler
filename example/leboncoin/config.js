@@ -1,5 +1,6 @@
 var fs = require('fs');
 var _ = require('underscore');
+var S = require('string');
 
 //ETL config
 module.exports = function() {
@@ -37,7 +38,15 @@ module.exports = function() {
 		},
 		transform : function (res) {
 			console.log('Map');
-			return res;
+			return _.map(res, function(item){
+				item.produits = _.map(item.produits, function(p){
+					p.categories = _.reject(p.categories, function(cat){
+						return S(cat).startsWith('Aujourd');
+					});
+					return p;
+				});
+				return item;
+			});
 		},
 		load : function(res) {
 			console.log('Load');
