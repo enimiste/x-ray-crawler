@@ -1,6 +1,5 @@
 var crawler = require('./crawler.js');
 
-//Foreach site :
 var config = require('./config.js');
 
 crawler(config(), function(err, result){
@@ -10,4 +9,3 @@ crawler(config(), function(err, result){
 		console.log('Success');
 	}
 });
-//End foreach site
