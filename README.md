@@ -1,5 +1,5 @@
 # x-ray-crawler
-Customisable Crawler based on x-ray scrapper library
+Customisable Crawler based on [x-ray](https://github.com/lapwinglabs/x-ray/) scrapper library
 
 ## Installation :
 - Download the repository into a subdirectory of your project.  
