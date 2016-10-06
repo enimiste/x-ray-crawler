@@ -21,7 +21,7 @@ function crawler (config, callback) {
 
 	let has_root_scope = (conf.base_url !== undefined && typeof(conf.base_url) === 'string');
 	let has_pagination = (conf.base_url !== undefined && typeof(conf.base_url) === 'string');
-	let has_limit = (conf.base_url !== undefined && typeof(conf.base_url) === 'int');
+	let has_limit = (conf.base_url !== undefined && typeof(conf.base_url) === 'number');
 	
 	if(conf.filters !== undefined){
 		var x = xray({ filters: config.filters });
@@ -48,22 +48,30 @@ function crawler (config, callback) {
 			x(conf.base_url, conf.props)
 				.paginate(conf.pagination)
 				.limit(conf.limit)(callback);
+			console.log('pagination + limit');
 		} else if(has_pagination) {
 			x(conf.base_url, conf.props)
 				.paginate(conf.pagination)(callback);
-		} else
+			console.log('pagination');
+		} else {
 			x(conf.base_url, conf.props)(callback);
+			console.log('non');
+		}
 	}
 	else {
 		if(has_pagination && has_limit) {
 			x(conf.base_url, conf.root_scope, conf.props)
 				.paginate(conf.pagination)
 				.limit(conf.limit)(callback);
+			console.log('scope + pagination + limit');
 		} else if(has_pagination) {
 			x(conf.base_url, conf.root_scope, conf.props)
 				.paginate(conf.pagination)(callback);
-		} else
+			console.log('scope + pagination');
+		} else {
 			x(conf.base_url, conf.props)(callback);
+			console.log('scope');
+		}
 	}
 };
 

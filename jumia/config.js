@@ -12,7 +12,6 @@ var config = {
 	options : function(xray) {
 		return { 
 			props : {
-				  categories : xray('.osh-breadcrumb li', [{ title : 'a@title' }]),
 				  produits : xray('.sku.-gallery:has(.sale-flag-percent)', [{
 					  title	: 'h2 .brand | trim',
 					  price : '.price span[data-price]',
@@ -20,7 +19,8 @@ var config = {
 					  discount : '.sale-flag-percent',
 					  href : '.link@href',
 					  image : '.image@data-src',
-				  }])
+				  }]),
+				  categories : xray('.osh-breadcrumb li', [{ title : 'a@title' }]),
 			}
 		};
 	}
