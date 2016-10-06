@@ -5,6 +5,8 @@ Customisable Crawler based on [x-ray](https://github.com/lapwinglabs/x-ray/) scr
 - Download the repository into a subdirectory of your project.  
 - In your app.js require the crawler as "var crawler = require('path/to/crawler.js');"  
 
+NB : This package is contains the underscorejs library.  
+
 ## Usage :
 To crawle a web site as you follow these steps :  
 1. Create a config.js file from the config.exemple.js  
