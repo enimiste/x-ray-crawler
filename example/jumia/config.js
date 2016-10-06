@@ -1,7 +1,7 @@
 var config = {
 	filters : {
 		trim : function(v){
-			return 'Hello';
+			return typeof v === 'string' ? v.trim() : v
 		}
 	},
 	base_url : 'https://www.jumia.ma/telephone/',
