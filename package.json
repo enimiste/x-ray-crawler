@@ -1,0 +1,17 @@
+{
+  "name": "xray",
+  "version": "1.0.0",
+  "description": "Simulate X-Ray Library",
+  "main": "./app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cheerio"
+  ],
+  "author": "NOUNI EL BACHIR <nouni.elbachir@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "x-ray": "^2.3.2"
+  }
+}
