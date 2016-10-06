@@ -14,6 +14,7 @@ To crawle a web site as you follow these steps :
 1. Create a config.js file from the config.exemple.js  
 ```js
 var _ = require('underscore');
+var S = require('string');
 
 //ETL config
 module.exports = function() {
