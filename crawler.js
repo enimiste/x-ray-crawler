@@ -24,6 +24,7 @@ function crawler (config, callback) {
 	let has_limit = (conf.limit !== undefined && typeof(conf.limit) === 'number');
 	
 	if(conf.filters !== undefined){
+		console.log('Setting filters');
 		var x = xray({ filters: config.filters });
 	} else {
 		var x = xray();
@@ -38,8 +39,10 @@ function crawler (config, callback) {
 			callback('Undefined props config', undefined);
 			return;
 		}
-		else
+		else {
+			console.log('Settings props');
 			conf.props = options.props;
+		}
 	}
 
 	console.log('Begin crawling ' + conf.base_url);
