@@ -7,28 +7,62 @@ Customisable Crawler based on [x-ray](https://github.com/lapwinglabs/x-ray/) scr
 
 ## Usage :
 To crawle a web site as you follow these steps :  
-1. Create a config.js file (see example/jumia/config.js).  
-2. Create app.js file in the root of the project.  
-3. Require the crawler and the config.js.  
-4. Call the crawler on the config file :  
+1. Create a config.js file from the config.exemple.js  
 ```js
+var _ = require('underscore');
 
-var fs = require('fs');
-var crawler = require('../../crawler.js');
+//ETL config
+module.exports = function() {
+	return {
+		extract : {
+				base_url : 'required',
+				root_scope : undefined,
+				pagination : undefined,
+				limit : undefined,
+				//@param xray instance
+				options : function(xray) {
+					return {
+						props : {
+							  //TODO : here you put your properties following the x-ray selectors
+						}
+					};
+				},
+				filters : {
+					filter1 : function(v){
+						return 'filtred value';
+					}
+				}
+		},
+		transform : function (res) {
+			//do transformations if needed
+			return res;
+		},
+		load : function(res) {
+			//save data into database or in files
+		}
+	};
+};
+
+```` 
+
+2. Create app.js file in the root of the project from app.exemple.js :
+```js
+var crawler = require('./crawler.js');
 
 //Foreach site :
 var config = require('./config.js');
 
-crawler(config, function(err, result){
+crawler(config(), function(err, result){
 	if(err) console.log(err);
 	else {
+		//already processed in the load fuction in config.js file
 		console.log('Success');
-		fs.writeFile(__dirname + '/output4.json', JSON.stringify(result, null, 4));
 	}
 });
 //End foreach site
 
 ```
+
+3. Customise your config file.
 5. Run `nodejs app.js`
-6. If all go good you will see a generated file under the root directory called output4.json
 
