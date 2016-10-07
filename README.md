@@ -3,7 +3,8 @@ Customisable Crawler based on [x-ray](https://github.com/lapwinglabs/x-ray/) scr
 
 ## Installation :
 - Download the repository into a subdirectory of your project.  
-- In your app.js require the crawler as "var crawler = require('path/to/crawler.js');"  
+- In your app.js require the crawler as "var crawler = require('path/to/crawler.js');" 
+- nodejs version 6 
 
 NB : This package is bundled with these libraries :
 - [underscorejs](http://underscorejs.org).  
