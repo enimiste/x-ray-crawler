@@ -15,6 +15,7 @@ To crawle a web site as you follow these steps :
 ```js
 var _ = require('underscore');
 var S = require('string');
+var fs = require('fs');
 
 //ETL config
 module.exports = function() {
@@ -24,8 +25,9 @@ module.exports = function() {
 				root_scope : undefined,
 				pagination : undefined,
 				limit : undefined,
+				use_phantom : false, //To use with caution
 				//@param xray instance
-				options : function(xray) {
+				properties : function(xray) {
 					return {
 						props : {
 							  //TODO : here you put your properties following the x-ray selectors

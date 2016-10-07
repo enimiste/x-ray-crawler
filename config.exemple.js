@@ -10,7 +10,7 @@ module.exports = function() {
 				root_scope : undefined,
 				pagination : undefined,
 				limit : undefined,
-				use_phantom : false,
+				use_phantom : false, //To use with caution
 				//@param xray instance
 				properties : function(xray) {
 					return {
