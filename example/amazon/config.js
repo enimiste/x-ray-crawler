@@ -10,7 +10,7 @@ module.exports = function() {
 				root_scope : undefined,
 				pagination : undefined,
 				limit : undefined,
-				use_phantom : true,
+				use_phantom : false,
 				//@param xray instance
 				properties : function(xray) {
 					return {
@@ -33,10 +33,7 @@ module.exports = function() {
 						return S(v).trim().s;
 					},
 					rating : function(v){
-						return S(v).replaceAll('(', '')
-								   .replaceAll(')', '')
-								   .replaceAll(',', '')
-								   .s;
+						return S(v).strip('(', ')', ',').s;
 					}
 				}
 		},
