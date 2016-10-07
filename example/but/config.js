@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var S = require('string');
+var fs = require('fs');
 
 //ETL config
 module.exports = function() {
@@ -14,8 +15,13 @@ module.exports = function() {
 				properties : function(xray) {
 					return {
 						props : {
-							  produits : xray('.orbit-slide .ventes', [{
-							  	titre : 'a'
+							  produits : xray('.orbit-slide .ventes:not(:has(.soldes.vhidden))', [{
+							  	titre : '.titre.libel_cour a | trim',
+							  	href : '.contenu .droite@onclick | href',
+							  	image : '.contenu .gauche img@src',
+							  	prix_origin : '.contenu .droite .prix .t12 | trim',
+							  	prix : '.contenu .droite .prix .t19 | trim',
+							  	solde : '.contenu .droite .soldes span | trim'
 							  }])
 						}
 					};
@@ -23,6 +29,9 @@ module.exports = function() {
 				filters : {
 					trim : function(v){
 						return S(v).trim().s;
+					},
+					href : function(v){
+						return S(v).between('redir:', ',').strip("'").trim().s;
 					}
 				}
 		},
@@ -32,7 +41,7 @@ module.exports = function() {
 		},
 		load : function(res) {
 			//save data into database or in files
-			console.log(res);
+			fs.writeFile(__dirname + '/output.json', JSON.stringify(res, null, 4));
 		}
 	};
 };
