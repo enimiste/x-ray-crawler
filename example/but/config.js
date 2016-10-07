@@ -9,8 +9,9 @@ module.exports = function() {
 				root_scope : '.orbit-wrapper',
 				pagination : undefined,
 				limit : undefined,
+				use_phantom : true,
 				//@param xray instance
-				options : function(xray) {
+				properties : function(xray) {
 					return {
 						props : {
 							  produits : xray('.orbit-slide .ventes', [{

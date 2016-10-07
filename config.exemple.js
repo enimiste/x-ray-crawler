@@ -10,8 +10,9 @@ module.exports = function() {
 				root_scope : undefined,
 				pagination : undefined,
 				limit : undefined,
+				use_phantom : false,
 				//@param xray instance
-				options : function(xray) {
+				properties : function(xray) {
 					return {
 						props : {
 							  //TODO : here you put your properties following the x-ray selectors

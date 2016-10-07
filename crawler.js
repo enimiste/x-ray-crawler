@@ -15,11 +15,16 @@ function checkConfig(conf){
 			good = false;
 		}
 
-		if(conf.extract.options === undefined) {
-			console.log('Undefined extract.options config');
+		if(conf.extract.properties === undefined) {
+			console.log('Undefined extract.properties config');
 			good = false;
-		} else if(typeof(conf.extract.options) !== 'function'){
-			console.log('extract.options should be a js function');
+		} else if(typeof(conf.extract.properties) !== 'function'){
+			console.log('extract.properties should be a js function');
+			good = false;
+		}
+
+		if(conf.extract.use_phantom !== undefined && typeof(conf.extract.use_phantom) !== 'boolean') {
+			console.log('extract.use_phantom should be a js boolean');
 			good = false;
 		}
 	}
@@ -58,7 +63,8 @@ function crawler (config, callback) {
 		root_scope : undefined,
 		pagination : undefined,
 		limit : undefined,
-		props : undefined
+		props : undefined,
+		use_phantom : false
 	};
 	
 	let has_root_scope = (conf.root_scope !== undefined && typeof(conf.root_scope) === 'string');
@@ -72,18 +78,24 @@ function crawler (config, callback) {
 		var x = xray();
 	}
 
-	if(config.extract.options === undefined) {
-		callback('Undefined options config', undefined);
+	if(conf.use_phantom === true){
+		console.log('Setting phantom');
+		var phantom = require('x-ray-phantom');
+		x = x.driver(phantom({ webSecurity : false }));
+	}
+
+	if(config.extract.properties === undefined) {
+		callback('Undefined properties config', undefined);
 		return;
 	} else {
-		let options  = config.extract.options(x);
+		let properties  = config.extract.properties(x);
 		
-		if(options.props === undefined) {
-			callback('Undefined options.props config', undefined);
+		if(properties.props === undefined) {
+			callback('Undefined properties.props config', undefined);
 			return;
 		}
 		console.log('Settings props');
-		conf.props = options.props;
+		conf.props = properties.props;
 		
 	}
 
@@ -102,14 +114,14 @@ function crawler (config, callback) {
 			x(conf.base_url, conf.props)
 				.paginate(conf.pagination)
 				.limit(conf.limit)(clbk);
-			console.log('pagination + limit');
+			console.log('Pagination + limit');
 		} else if(has_pagination) {
 			x(conf.base_url, conf.props)
 				.paginate(conf.pagination)(clbk);
-			console.log('pagination');
+			console.log('Pagination');
 		} else {
 			x(conf.base_url, conf.props)(clbk);
-			console.log('non');
+			console.log('Without pagination and limit');
 		}
 	}
 	else {
@@ -117,14 +129,14 @@ function crawler (config, callback) {
 			x(conf.base_url, conf.root_scope, conf.props)
 				.paginate(conf.pagination)
 				.limit(conf.limit)(clbk);
-			console.log('scope + pagination + limit');
+			console.log('Scope + pagination + limit');
 		} else if(has_pagination) {
 			x(conf.base_url, conf.root_scope, conf.props)
 				.paginate(conf.pagination)(clbk);
-			console.log('scope + pagination');
+			console.log('Scope + pagination');
 		} else {
 			x(conf.base_url, conf.props)(clbk);
-			console.log('scope');
+			console.log('Without pagination and limit');
 		}
 	}
 };

@@ -10,8 +10,9 @@ module.exports = function() {
 				root_scope : '.tabsContent',
 				pagination : '#next a@href',
 				limit : 1,
+				use_phantom : false,
 				//@param xray instance
-				options : function(xray) {
+				properties : function(xray) {
 					return {
 						props : {
 							  produits : xray('.list li:has(h3.item_price)', [{

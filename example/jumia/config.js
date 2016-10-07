@@ -10,8 +10,9 @@ module.exports = function() {
 			root_scope : '',
 			pagination : '.item.-selected + .item a@href',
 			limit : undefined,
+			use_phantom : false,
 			//@param xray instance
-			options : function(xray) {
+			properties : function(xray) {
 				return { 
 					props : {
 						  produits : xray('.sku.-gallery:has(.sale-flag-percent)', [{
