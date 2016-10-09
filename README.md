@@ -72,5 +72,5 @@ crawler(config(), function(err, result){
 ```
 
 3. Customise your config file.
-5. Run `nodejs app.js`
+5. Run `DEBUG=nit-crawler,website,app nodejs app.js`
 

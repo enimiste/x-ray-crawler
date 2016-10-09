@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var fs = require('fs');
 var S = require('string');
+var debug = require('debug')('website');
 
 module.exports = function() {
 	var i = 1;
@@ -34,7 +35,7 @@ module.exports = function() {
 			}
 		},
 		transform : function (res) {
-			console.log('Map');
+			debug('transform data');
 			//Add an id prop to loaded products
 			return _.map(res, function(item){
 				item.produits = _.map(item.produits, function(p){
@@ -48,7 +49,7 @@ module.exports = function() {
 			});
 		},
 		load : function(res) {
-			console.log('Load');
+			debug('load data');
 			fs.writeFile(__dirname + '/output.json', JSON.stringify(res, null, 4));
 		}
 	};

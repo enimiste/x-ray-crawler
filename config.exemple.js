@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var S = require('string');
 var fs = require('fs');
+var debug = require('debug')('website');
 
 //ETL config
 module.exports = function() {
@@ -27,10 +28,12 @@ module.exports = function() {
 		},
 		transform : function (res) {
 			//do transformations if needed
+			debug('transform data');
 			return res;
 		},
 		load : function(res) {
 			//save data into database or in files
+			debug('load data');
 		}
 	};
 };

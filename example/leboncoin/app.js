@@ -1,10 +1,12 @@
 var crawler = require('../../crawler.js');
-
 var config = require('./config.js');
+var debug = require('debug')('app');
 
+debug('Run');
 crawler(config(), function(err, result){
-	if(err) console.log(err);
+	if(err) debug(err);
 	else {
-		console.log('Success');
+		//already processed in the load fuction in config.js file
+		debug('Success');
 	}
 });
