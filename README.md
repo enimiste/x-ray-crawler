@@ -11,7 +11,7 @@ NB : This package is bundled with these libraries :
 - [stringjs](http://stringjs.com).  
 - [debug](https://github.com/visionmedia/debug).  
 
-## Usage :
+## Usage 1 :
 To crawle a web site as you follow these steps :  
 1. Create a config.js file from the config.exemple.js  
 ```js
@@ -21,7 +21,8 @@ var fs = require('fs');
 var debug = require('debug')('nit:website');
 
 //ETL config
-module.exports = function() {
+module.exports = function(base_path) {
+	var base_path = path || '';
 	return {
 		extract : {
 				base_url : 'required',
@@ -51,6 +52,9 @@ module.exports = function() {
 		load : function(res) {
 			//save data into database or in files
 			debug('load data');
+			/*fs.exists(base_path, (exists) => {
+			  if(exists) fs.writeFile(base_path + '/output.json', JSON.stringify(res, null, 4));
+ 			});*/
 		}
 	};
 };
@@ -64,12 +68,16 @@ var config = require('./config.js');
 var debug = require('debug')('nit:app');
 
 debug('Run');
-crawler(config(), function(err, result){
-	if(err) debug(err);
+crawler([config()], function(errs, results){
+	if(errs.length > 0) debug(errs);
 	else {
 		//already processed in the load fuction in config.js file
 		debug('Success');
 	}
+},
+{
+	load : false, //To disable the load action on each config file
+	transform : true //To disable the tranform action on each config file
 });
 
 ```
@@ -77,3 +85,30 @@ crawler(config(), function(err, result){
 3. Customise your config file.
 5. Run `DEBUG=nit:* nodejs app.js`
 
+## Usage 2 :
+To process many configs and execute one load on the final result.
+
+Same steps on Usage 1.
+But the config app.js file is as follow :
+
+```js
+var crawler = require('./crawler.js');
+var conf1 = require('./config1.js');
+var conf2 = require('./config2.js');
+
+var debug = require('debug')('nit:app');
+var fs = require('fs');
+
+debug('Run');
+crawler([conf1(), conf2()], function(errs, results){
+	if(errs.length > 0) debug(errs);
+	else {
+		debug('Success');
+		fs.writeFile(__dirname + '/output.json', JSON.stringify(results, null, 4));
+	}
+}, {
+	load : false, //false to disable the load action on each config file
+	transform : true //false to disable the tranform action on each config file
+});
+
+```

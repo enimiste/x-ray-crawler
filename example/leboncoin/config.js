@@ -4,7 +4,8 @@ var S = require('string');
 var debug = require('debug')('nit:website');
 
 //ETL config
-module.exports = function() {
+module.exports = function(path) {
+	var base_path = path || __dirname;
 	return {
 		extract : {
 				base_url : 'https://www.leboncoin.fr/_multimedia_/offres/',
@@ -21,20 +22,23 @@ module.exports = function() {
 								  price : 'h3.item_price | delbsp',
 								  href : 'a.list_item@href',
 								  image : 'span[data-imgsrc]@data-imgsrc',
-							  	  categories : xray('.item_supp', ['@text | trim | delnt']),
+							  	  categories : xray('.item_supp', ['@text | trim | delnt | categorie']),
 							  }]),
 						}
 					};
 				},
 				filters : {
 					trim : function(v){
-						return typeof v === 'string' ? v.trim() : v
+						return S(v).trim().s;
 					},
 					delbsp : function(v){
-						return typeof v == 'string' ? v.replace(/\s+/g, '') : v;
+						return S(v).replaceAll(/\s+/g, '').s;
 					},
 					delnt : function(v){
-						return typeof v == 'string' ? v.replace(/[\n\t]/g, '') : v;
+						return S(v).replaceAll(/[\n\t]/g, '').s;
+					},
+					categorie : function(v){
+						return S(v).replaceAll(/\s+/g, ' ').s;
 					}
 				}
 		},
@@ -52,7 +56,9 @@ module.exports = function() {
 		},
 		load : function(res) {
 			debug('load data');
-			fs.writeFile(__dirname + '/output4.json', JSON.stringify(res, null, 4));
+			fs.exists(base_path, (exists) => {
+			  if(exists) fs.writeFile(base_path + '/output.json', JSON.stringify(res, null, 4));
+ 			});
 		}
 	};
 };

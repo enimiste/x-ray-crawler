@@ -3,7 +3,8 @@ var fs = require('fs');
 var S = require('string');
 var debug = require('debug')('nit:website');
 
-module.exports = function() {
+module.exports = function(path) {
+	var base_path = path || __dirname;
 	var i = 1;
 	return {
 		extract : {
@@ -50,7 +51,9 @@ module.exports = function() {
 		},
 		load : function(res) {
 			debug('load data');
-			fs.writeFile(__dirname + '/output.json', JSON.stringify(res, null, 4));
+			fs.exists(base_path, (exists) => {
+			  if(exists) fs.writeFile(base_path + '/output.json', JSON.stringify(res, null, 4));
+ 			});
 		}
 	};
 };

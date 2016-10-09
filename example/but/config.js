@@ -4,7 +4,8 @@ var fs = require('fs');
 var debug = require('debug')('nit:website');
 
 //ETL config
-module.exports = function() {
+module.exports = function(path) {
+	var base_path = path || __dirname;
 	return {
 		extract : {
 				base_url : 'http://www.but.fr/',
@@ -44,7 +45,10 @@ module.exports = function() {
 		load : function(res) {
 			//save data into database or in files
 			debug('load data');
-			fs.writeFile(__dirname + '/output.json', JSON.stringify(res, null, 4));
+			fs.exists(base_path, (exists) => {
+			  if(exists) fs.writeFile(base_path + '/output.json', JSON.stringify(res, null, 4));
+ 			});
+			
 		}
 	};
 };

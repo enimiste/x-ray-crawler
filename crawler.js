@@ -1,5 +1,6 @@
 var xray = require('x-ray');
 var debug = require('debug')('nit:crawler');
+var _ = require('underscore');
 
 
 function checkConfig(conf){
@@ -51,14 +52,16 @@ function checkConfig(conf){
 
 	return good;
 }
-/**
-* @param xray module
-* @param config json
-* @param callback function
-*/
-function crawler (config, callback) {
-	if(!checkConfig(config)) return;
 
+/**
+* @param object config
+* @param function callback
+* @param object options
+* @param number nbr_configs
+* @param array results
+* @param array errors
+*/
+function process (config, callback, options, nbr_configs, results, errors) {
 	let conf = config.extract || {
 		filters : undefined,
 		base_url : undefined,
@@ -67,6 +70,11 @@ function crawler (config, callback) {
 		limit : undefined,
 		props : undefined,
 		use_phantom : false
+	};
+
+	let opts = options || {
+		load : true,
+		transform : true
 	};
 	
 	let has_root_scope = (conf.root_scope !== undefined && typeof(conf.root_scope) === 'string');
@@ -106,11 +114,20 @@ function crawler (config, callback) {
 	//X-ray callback
 	function clbk(err, res){
 		if(!err){
-			res = config.transform(res);
-			config.load(res);
+			if(!_.isArray(res)) res = [res]; // To normalize output
+			debug('After extract');
+			if(opts.transform) res = config.transform(res);
+			debug('After transform');
+			results.push(res);
+			if(opts.load) config.load(res);
+			debug('After load');
+		}else{
+			debug(err);
+			errors.push(err);
 		}
-		if(callback !== undefined && (typeof(callback) === 'function'))
-			callback(err, res);
+
+		if(callback !== undefined && (typeof(callback) === 'function') && nbr_configs === results.length)
+				callback(errors, results);
 	}
 
 	if(!has_root_scope) {
@@ -143,6 +160,30 @@ function crawler (config, callback) {
 			debug('Without pagination and limit');
 		}
 	}
+}
+
+/**
+* @param object options
+* @param array configs
+* @param function callback
+*/
+function crawler (configs, callback, options) {
+	if(!_.isArray(configs)) configs = [configs];
+
+	let isValid = _.reduce(configs, function(acc, c){
+		return acc && checkConfig(c);
+	}, true);
+
+	if(!isValid) return;
+
+	var results = [];
+	var errors = [];
+
+
+	_.each(configs, function(config){
+		process(config, callback, options, configs.length, results, errors);
+	});
+	
 };
 
 module.exports = crawler;
