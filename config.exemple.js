@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var S = require('string');
 var fs = require('fs');
-var debug = require('debug')('website');
+var debug = require('debug')('nit:website');
 
 //ETL config
 module.exports = function() {

@@ -1,5 +1,5 @@
 var xray = require('x-ray');
-var debug = require('debug')('nit-crawler');
+var debug = require('debug')('nit:crawler');
 
 
 function checkConfig(conf){
@@ -105,8 +105,10 @@ function crawler (config, callback) {
 
 	//X-ray callback
 	function clbk(err, res){
-		res = config.transform(res);
-		config.load(res);
+		if(!err){
+			res = config.transform(res);
+			config.load(res);
+		}
 		if(callback !== undefined && (typeof(callback) === 'function'))
 			callback(err, res);
 	}

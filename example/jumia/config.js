@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var fs = require('fs');
 var S = require('string');
-var debug = require('debug')('website');
+var debug = require('debug')('nit:website');
 
 module.exports = function() {
 	var i = 1;

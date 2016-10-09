@@ -17,7 +17,7 @@ To crawle a web site as you follow these steps :
 var _ = require('underscore');
 var S = require('string');
 var fs = require('fs');
-var debug = require('debug')('website');
+var debug = require('debug')('nit:website');
 
 //ETL config
 module.exports = function() {
@@ -60,7 +60,7 @@ module.exports = function() {
 ```js
 var crawler = require('./crawler.js');
 var config = require('./config.js');
-var debug = require('debug')('app');
+var debug = require('debug')('nit:app');
 
 debug('Run');
 crawler(config(), function(err, result){
@@ -74,5 +74,5 @@ crawler(config(), function(err, result){
 ```
 
 3. Customise your config file.
-5. Run `DEBUG=nit-crawler,website,app nodejs app.js`
+5. Run `DEBUG=nit:* nodejs app.js`
 

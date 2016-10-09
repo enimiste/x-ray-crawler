@@ -1,6 +1,6 @@
 var crawler = require('../../crawler.js');
 var config = require('./config.js');
-var debug = require('debug')('app');
+var debug = require('debug')('nit:app');
 
 debug('Run');
 crawler(config(), function(err, result){
