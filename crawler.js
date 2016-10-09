@@ -62,7 +62,7 @@ function checkConfig(conf){
 * @param array errors
 */
 function process (config, callback, options, nbr_configs, results, errors) {
-	let conf = config.extract || {
+	let conf = _.extend({
 		filters : undefined,
 		base_url : undefined,
 		root_scope : undefined,
@@ -70,12 +70,12 @@ function process (config, callback, options, nbr_configs, results, errors) {
 		limit : undefined,
 		props : undefined,
 		use_phantom : false
-	};
+	}, config.extract);
 
-	let opts = options || {
+	let opts = _.extend({
 		load : true,
 		transform : true
-	};
+	}, options);
 	
 	let has_root_scope = (conf.root_scope !== undefined && typeof(conf.root_scope) === 'string');
 	let has_pagination = (conf.pagination !== undefined && typeof(conf.pagination) === 'string');
