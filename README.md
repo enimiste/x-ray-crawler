@@ -8,7 +8,8 @@ Customisable Crawler based on [x-ray](https://github.com/lapwinglabs/x-ray/) scr
 
 NB : This package is bundled with these libraries :
 - [underscorejs](http://underscorejs.org).  
-- [stringjs](http://stringjs.com/).  
+- [stringjs](http://stringjs.com).  
+- [debug](https://github.com/visionmedia/debug).  
 
 ## Usage :
 To crawle a web site as you follow these steps :  
