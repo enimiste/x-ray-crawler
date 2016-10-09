@@ -17,6 +17,7 @@ To crawle a web site as you follow these steps :
 var _ = require('underscore');
 var S = require('string');
 var fs = require('fs');
+var debug = require('debug')('website');
 
 //ETL config
 module.exports = function() {
@@ -43,10 +44,12 @@ module.exports = function() {
 		},
 		transform : function (res) {
 			//do transformations if needed
+			debug('transform data');
 			return res;
 		},
 		load : function(res) {
 			//save data into database or in files
+			debug('load data');
 		}
 	};
 };
@@ -56,18 +59,17 @@ module.exports = function() {
 2. Create app.js file in the root of the project from app.exemple.js :
 ```js
 var crawler = require('./crawler.js');
-
-//Foreach site :
 var config = require('./config.js');
+var debug = require('debug')('app');
 
+debug('Run');
 crawler(config(), function(err, result){
-	if(err) console.log(err);
+	if(err) debug(err);
 	else {
 		//already processed in the load fuction in config.js file
-		console.log('Success');
+		debug('Success');
 	}
 });
-//End foreach site
 
 ```
 
